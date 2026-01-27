@@ -3,39 +3,43 @@ import pyrosim.pyrosim as pyrosim
 # Start SDF file
 pyrosim.Start_SDF("boxes.sdf")
 
-# --- Tower parameters ---
-length = 1
-width = 1
-height = 1
+# Tower parameters
+tower_height = 10       # number of blocks per tower
+num_rows = 5            # towers along x-axis
+num_columns = 5         # towers along y-axis
+initial_length = 1
+initial_width = 1
+initial_height = 1
+spacing = 2             # space between towers
 
-# Position for the first block
-x = 0
-y = 0
-z = height / 2   # sits on floor
-
-num_blocks = 10
-
-for i in range(num_blocks):
-    pyrosim.Send_Cube(name=f"Block{i+1}", pos=[x, y, z], size=[length, 
-width, height])
-    
-    # Prepare for next block
-    z += height      # stack on top
-    length *= 0.9    # reduce size
-    width *= 0.9
-    height *= 0.9
-
-# --- Optional extra cube in front of tower ---
-length2 = 1
-width2 = 1
-height2 = 1
-x2 = 0
-y2 = 1.5
-z2 = height2 / 2   # bottom on floor
-
-pyrosim.Send_Cube(name="Box2", pos=[x2, y2, z2], size=[length2, width2, 
-height2])
+# Loop over each tower in the grid
+for row in range(num_rows):
+    for col in range(num_columns):
+        # Reset size for each tower
+        length = initial_length
+        width = initial_width
+        height = initial_height
+        
+        # Base position for this tower
+        x = row * spacing
+        y = col * spacing
+        z = height / 2   # bottom of first cube sits on floor
+        
+        # Build the tower vertically
+        for i in range(tower_height):
+            pyrosim.Send_Cube(
+                name=f"Block_r{row}_c{col}_i{i}",
+                pos=[x, y, z],
+                size=[length, width, height]
+            )
+            # Prepare next block
+            z += height       # stack vertically
+            length *= 0.9     # shrink each level
+            width *= 0.9
+            height *= 0.9
 
 # End SDF file
 pyrosim.End()
+
+
 
