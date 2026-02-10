@@ -1,4 +1,5 @@
-
+import pyrosim.pyrosim as pyrosim
+import numpy
 import pybullet as p
 import pybullet_data
 import time
@@ -14,6 +15,7 @@ planeId = p.loadURDF("plane.urdf")
 p.loadSDF("world.sdf")
 # Robot
 robotId = p.loadURDF("body.urdf")  # the robot link
+pyrosim.Prepare_To_Simulate(robotId)
 
 p.resetDebugVisualizerCamera(
     cameraDistance=7,
@@ -22,11 +24,15 @@ p.resetDebugVisualizerCamera(
     cameraTargetPosition=[0, 0, 1])  # roughly center on the robot
 #pauses the program for 1/60th of a second 
 
+backLegSensorValues = numpy.zeros(1000)
+print(backLegSensorValues)
+exit()
+
 #PRINT ITERATION
 for i in range(1000):
 	p.stepSimulation()
+	backLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("BackLeg")
 	time.sleep(1/60)
-	print(i)
 
 p.disconnect()
 
