@@ -1,3 +1,4 @@
+
 import pyrosim.pyrosim as pyrosim
 import numpy
 import pybullet as p
@@ -23,7 +24,7 @@ p.resetDebugVisualizerCamera(
     cameraPitch=-30,
     cameraTargetPosition=[0, 0, 1])  # roughly center on the robot
 #pauses the program for 1/60th of a second 
-frontLegSensorValues = numpy.zeros(5000)
+frontLegSensorValues = numpy.zeros(1000)
 backLegSensorValues = numpy.zeros(1000)
 
 #PRINT ITERATION
@@ -31,6 +32,19 @@ for i in range(1000):
 	p.stepSimulation()
 	backLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("BackLeg")
 	frontLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("FrontLeg")
+	pyrosim.Set_Motor_For_Joint(
+		bodyIndex=robotId, 
+		jointName=b"Torso_BackLeg",
+	        controlMode=p.POSITION_CONTROL,
+	        targetPosition=-numpy.pi/4.0,
+		maxForce=500)	
+	pyrosim.Set_Motor_For_Joint(
+       	        bodyIndex=robotId,
+       	        jointName=b"Torso_FrontLeg",
+        	controlMode=p.POSITION_CONTROL,
+        	targetPosition=+numpy.pi/4.0,
+        	maxForce=500)
+
 	time.sleep(1/60)
 numpy.save("data/backLegSensorValues.npy", backLegSensorValues)
 numpy.save("data/frontLegSensorValues.npy", frontLegSensorValues)
