@@ -42,9 +42,10 @@ class ROBOT:
             if self.nn.Is_Motor_Neuron(neuronName):
 
                 jointName = self.nn.Get_Motor_Neurons_Joint(neuronName)
-
+                if type(jointName) is str:
+                    jointName = jointName.encode("utf-8")
                 desiredAngle = self.nn.Get_Value_Of(neuronName)
-
+                self.motors[jointName].Set_Value(self.robotId, t)
                 print(neuronName, jointName, desiredAngle)
     def Save_Sensor_Values(self):
 
