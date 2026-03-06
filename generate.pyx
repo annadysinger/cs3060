@@ -29,6 +29,7 @@ def Generate_Body():
         child="BackLeg",
         type="revolute",
         position=[1.0, 0, 1.0]
+        jointAxis="0 1 0"
 
    # absolute (bottom of torso)
     )
@@ -47,7 +48,8 @@ def Generate_Body():
         parent="Torso",
         child="FrontLeg",
         type="revolute",
-        position=[2.0, 0, 1.0]  # absolute (front face of torso)
+        position=[2.0, 0, 1.0]   # absolute (front face of torso)
+        jointAcis="0 1 0"
     )
 
     pyrosim.Send_Cube(
