@@ -46,6 +46,17 @@ class ROBOT:
                     jointName = jointName.encode("utf-8")
                 desiredAngle = self.nn.Get_Value_Of(neuronName)
                 self.motors[jointName].Set_Value(self.robotId, desiredAngle)
+    def Get_Fitness(self):
+
+        state = p.getLinkState(self.robotId, 0)
+
+        position = state[0]
+
+        x = position[0]
+
+        f = open("fitness.txt", "w")
+        f.write(str(x))
+        f.close()
     def Save_Sensor_Values(self):
 
         for sensor in self.sensors.values():
