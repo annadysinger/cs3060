@@ -35,7 +35,7 @@ class ROBOT:
             sensor.Get_Value(t)
     def Think(self):
         self.nn.Update()
-        self.nn.Print()
+       
     def Act(self, t):
         for neuronName in self.nn.Get_Neuron_Names():
 
@@ -45,8 +45,7 @@ class ROBOT:
                 if type(jointName) is str:
                     jointName = jointName.encode("utf-8")
                 desiredAngle = self.nn.Get_Value_Of(neuronName)
-                self.motors[jointName].Set_Value(self.robotId, t)
-                print(neuronName, jointName, desiredAngle)
+                self.motors[jointName].Set_Value(self.robotId, desiredAngle)
     def Save_Sensor_Values(self):
 
         for sensor in self.sensors.values():
