@@ -1,9 +1,11 @@
 import numpy
 import os
+import constants as c
 import pyrosim.pyrosim as pyrosim
 class SOLUTION:
 
-    def __init__(self):
+    def __init__(self, myID):
+        self.myID = myID
         self.weights = numpy.random.rand(3,2)
        
        # print("Before:", self.weights)
@@ -72,8 +74,9 @@ class SOLUTION:
         pyrosim.End()
 # Step 2: Create the robot
     def Generate_Brain(self):
-        pyrosim.Start_NeuralNetwork("brain.nndf")
-
+        import time
+        import os
+        pyrosim.Start_NeuralNetwork(f"brain{self.myID}.nndf")
         pyrosim.Send_Sensor_Neuron(
 	    name=0,
 	    linkName="Torso"
@@ -92,28 +95,55 @@ class SOLUTION:
                     weight=self.weights[i][j]
                 )    
         pyrosim.End()
+        brainFileName = f"brain{self.myID}.nndf"
+        while not os.path.exists(brainFileName):
+             time.sleep(0.01)
 
-    def Evaluate(self, mode):
-        self.Create_World()   
-        self.Generate_Body()
+    def Start_Simulation(self, mode):
+        self.Create_World()  
+        self.Generate_Body() 
         self.Generate_Brain()
         import os
-        os.system("python simulate.py {mode}")
-        f = open("fitness.txt", "r")
-        self.fitness = float(f.read())
-        f.close()
-
+        os.system(f"python simulate.py {mode} {self.myID} &")
+    def Wait_For_Simulation_To_End(self):
+        import time
+        import os
+        fitnessFileName = f"fitness{self.myID}.txt"
+        while True:
+            if os.path.exists(fitnessFileName):
+                with open(fitnessFileName, "r") as f:
+                    content = f.read()
+                    if content != "":
+                        self.fitness = float(content)
+                        break
+            time.sleep(0.01)        
         print("Fitness:", self.fitness)
+        
+        os.system(f"rm fitness{self.myID}.txt")
+  
+ # def Evaluate(self, mode):
+    #    self.Create_World()   
+     #   self.Generate_Body()
+      #  self.Generate_Brain()
+       # import os
+        #os.system(f"python simulate.py {mode} {self.myID} &")
+       # f = open(f"fitness{self.myID}.txt", "r")
+       # self.fitness = float(f.read())
+       # f.close()
+
+       # print("Fitness:", self.fitness)
     def Copy(self):
     
-        newSolution = SOLUTION()
+        newSolution = SOLUTION(self.myID)
 
         newSolution.weights = self.weights.copy()
 
         return newSolution
     def Mutate(self):
 
-        i = numpy.random.randint(0,3)
-        j = numpy.random.randint(0,2)
+        i = numpy.random.randint(0,c.numSensorNeurons)
+        j = numpy.random.randint(0,c.numMotorNeurons)
 
         self.weights[i][j] = numpy.random.rand() * 2 - 1
+    def Set_ID(self, myID):
+        self.myID = myID

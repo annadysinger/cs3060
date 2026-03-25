@@ -7,6 +7,7 @@ class HILL_CLIMBER:
         self.parent = SOLUTION()
     def Evolve(self):
         print("evolve")
+        self.parent.Evaulate("GUI")
         self.parent.Evaluate("DIRECT")
         for generation in range(10):
 
@@ -18,9 +19,8 @@ class HILL_CLIMBER:
 
             child.Evaluate("DIRECT")
 
-            print("Parent fitness:", self.parent.fitness)
-            print("Child fitness:", child.fitness)
-
+            print("Parent:", self.parent.fitness, "Child:", child.fitness)
+            
             if child.fitness > self.parent.fitness:
 
                 print("Child wins! ")

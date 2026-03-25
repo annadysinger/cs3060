@@ -9,3 +9,7 @@ frequency = 1
 phaseOffset = 0
 
 maxForce = 30
+populationSize = 10
+numberOfGenerations = 10
+numSensorNeurons = 3
+numMotorNeurons = 2
