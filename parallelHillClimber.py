@@ -1,4 +1,4 @@
-print("hillclimber")
+print("parallelhillclimber")
 from solution import SOLUTION
 import constants as c
 class PARALLEL_HILL_CLIMBER:
@@ -6,7 +6,8 @@ class PARALLEL_HILL_CLIMBER:
     def __init__(self):
         import os
         os.system("rm brain*.nndf")
-        os.system("rm fitness*.txt")   
+        os.system("rm fitness*.txt")
+        print("populationSize =", c.populationSize)   
         self.nextAvailableID = 0
 #        print("init")
         self.parents = {}
@@ -15,10 +16,10 @@ class PARALLEL_HILL_CLIMBER:
             self.nextAvailableID += 1      
        # print(self.parents)
     def Evolve(self):
-        #print("evolve")
+        print("evolve start")
+        print("parents at evolve:", self.parents)
         for i in self.parents:
             self.parents[i].Start_Simulation("DIRECT")
-        for i in self.parents:
             self.parents[i].Wait_For_Simulation_To_End()
         for generation in range(c.numberOfGenerations):
 
@@ -51,7 +52,6 @@ class PARALLEL_HILL_CLIMBER:
 
         for i in self.children:
             self.children[i].Start_Simulation("DIRECT")
-        for i in self.children:
             self.children[i].Wait_For_Simulation_To_End()
     def Select(self):
 

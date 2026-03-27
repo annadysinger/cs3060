@@ -5,8 +5,9 @@ import pyrosim.pyrosim as pyrosim
 class SOLUTION:
 
     def __init__(self, myID):
+        print("Creating solution with ID:", myID)
         self.myID = myID
-        self.weights = numpy.random.rand(3,2)
+        self.weights = numpy.random.rand(c.numSensorNeurons, c.numMotorNeurons)
        
        # print("Before:", self.weights)
 
@@ -31,7 +32,7 @@ class SOLUTION:
     # ----------------
         pyrosim.Send_Cube(
             name="Torso",
-            pos=[1.5, 0, 1.5],     # absolute
+            pos=[0, 0, 1],     # absolute
             size=[1, 1, 1]
         )
 
@@ -87,8 +88,8 @@ class SOLUTION:
         pyrosim.Send_Motor_Neuron(name=3, jointName="Torso_BackLeg")
         pyrosim.Send_Motor_Neuron(name=4, jointName="Torso_FrontLeg")
     
-        for i in range(3):      # 0,1,2
-            for j in range(2):
+        for i in range(c.numSensorNeurons):      # 0,1,2
+            for j in range(c.numMotorNeurons):
                 pyrosim.Send_Synapse(
                     sourceNeuronName=i,
                     targetNeuronName=j + 3,
@@ -98,13 +99,19 @@ class SOLUTION:
         brainFileName = f"brain{self.myID}.nndf"
         while not os.path.exists(brainFileName):
              time.sleep(0.01)
-
+        exit()
     def Start_Simulation(self, mode):
+        print("start simulation with ID:", self.myID, "mode:", mode)
         self.Create_World()  
         self.Generate_Body() 
         self.Generate_Brain()
         import os
-        os.system(f"python simulate.py {mode} {self.myID} &")
+        import sys
+        import subprocess
+  #      subprocess.run(
+ #           [sys.executable, "simulate.py", mode, str(self.myID)]
+#        )
+        os.system(f"{sys.executable} simulate.py {mode} {self.myID} &")
     def Wait_For_Simulation_To_End(self):
         import time
         import os

@@ -24,7 +24,7 @@ class SIMULATION:
 
         self.world = WORLD()
         self.robot = ROBOT(solutionID)
-
+        self.solutionID = solutionID
     def Run(self):
 
         for t in range(c.numberOfSteps):
@@ -34,10 +34,15 @@ class SIMULATION:
             self.robot.Act(t)
             if self.directOrGUI == "GUI":
                 time.sleep(c.sleepTime)
-       
-        self.robot.Save_Sensor_Values()
-        self.Get_Fitness()
+            self.robot.Save_Sensor_Values()
+
+            fitness = self.Get_Fitness()
+
+            with open(f"fitness{self.solutionID}.txt", "w") as f:
+                f.write(str(fitness))
+            import sys
+            sys.exit()
     def Get_Fitness(self):
-        self.robot.Get_Fitness()
+        return self.robot.Get_Fitness()
     def __del__(self):
         p.disconnect()
