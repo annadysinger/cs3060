@@ -3,7 +3,7 @@ import pyrosim.pyrosim as pyrosim
 from pyrosim.neuralNetwork import NEURAL_NETWORK
 from sensor import SENSOR
 from motor import MOTOR
-
+import constants as c
 
 class ROBOT:
 
@@ -44,16 +44,13 @@ class ROBOT:
                 jointName = self.nn.Get_Motor_Neurons_Joint(neuronName)
                 if type(jointName) is str:
                     jointName = jointName.encode("utf-8")
-                desiredAngle = self.nn.Get_Value_Of(neuronName)
+                desiredAngle = self.nn.Get_Value_Of(neuronName)* c.motorJointRange
                 self.motors[jointName].Set_Value(self.robotId, desiredAngle)
     def Get_Fitness(self):
-
-        state = p.getLinkState(self.robotId, 0)
-
-        position = state[0]
-
-        x = position[0]
-        self.fitness = x
+        basePositionAndOrientation = p.getBasePositionAndOrientation(self.robotId)
+        basePosition = basePositionAndOrientation[0]
+        x = basePosition[0]
+        self.fitness = -x
         f = open(f"fitness{self.solutionID}.txt", "w")
         f.write(str(self.fitness))
         f.close()
