@@ -9,8 +9,8 @@ frequency = 1
 phaseOffset = 0
 
 maxForce = 30
-populationSize = 15
-numberOfGenerations = 15
-numSensorNeurons = 13
-numMotorNeurons = 12
+populationSize = 10
+numberOfGenerations = 10
+numSensorNeurons = 9
+numMotorNeurons = 8
 motorJointRange = 0.2

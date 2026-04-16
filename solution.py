@@ -127,36 +127,6 @@ class SOLUTION:
             pos=[0, 0, -0.5],
             size=[0.2, 0.2, 1]
         )
-# middle left leg
-        pyrosim.Send_Joint(
-            name="Torso_MiddleLeftLeg",
-            parent="Torso",
-            child="MiddleLeftLeg",
-            type="revolute",
-            position=[-0.5, -0.5, 1],
-            jointAxis="0 1 0"
-        )
-
-        pyrosim.Send_Cube(
-            name="MiddleLeftLeg",
-            pos=[-0.5, 0, 0],
-            size=[1, 0.2, 0.2]
-        )
-
-        pyrosim.Send_Joint(
-            name="MiddleLeftLeg_MiddleLeftLowerLeg",
-            parent="MiddleLeftLeg",
-            child="MiddleLeftLowerLeg",
-            type="revolute",
-            position=[-1.0, 0, 0],
-            jointAxis="0 1 0"
-        )
-
-        pyrosim.Send_Cube(
-            name="MiddleLeftLowerLeg",
-            pos=[0, 0, -0.5],
-            size=[0.2, 0.2, 1]
-        )
 
 # torso right leg
         pyrosim.Send_Joint(
@@ -185,35 +155,6 @@ class SOLUTION:
             pos=[0, 0, -0.5],
             size=[0.2, 0.2, 1]
         )
-#torso middle right leg
-        pyrosim.Send_Joint(
-            name="Torso_MiddleRightLeg",
-            parent="Torso",
-            child="MiddleRightLeg",
-            type="revolute",
-            position=[0.5, 0.5, 1],
-            jointAxis="0 1 0"
-        )
-
-        pyrosim.Send_Cube(
-            name="MiddleRightLeg",
-            pos=[0.5, 0, 0],
-            size=[1, 0.2, 0.2]
-        )
-        pyrosim.Send_Joint(
-            name="MiddleRightLeg_MiddleRightLowerLeg",
-            parent="MiddleRightLeg",
-            child="MiddleRightLowerLeg",
-            type="revolute",
-            position=[1.0, 0, 0],
-            jointAxis="0 1 0"
-        )
-
-        pyrosim.Send_Cube(
-            name="MiddleRightLowerLeg",
-            pos=[0, 0, -0.5],
-            size=[0.2, 0.2, 1]
-        )
 
         pyrosim.End()
 # Step 2: Create the robot
@@ -233,22 +174,14 @@ class SOLUTION:
         pyrosim.Send_Sensor_Neuron(name=6, linkName="BackLowerLeg")
         pyrosim.Send_Sensor_Neuron(name=7, linkName="LeftLowerLeg")
         pyrosim.Send_Sensor_Neuron(name=8, linkName="RightLowerLeg")
-        pyrosim.Send_Sensor_Neuron(name=9, linkName="MiddleLeftLeg")
-        pyrosim.Send_Sensor_Neuron(name=10, linkName="MiddleRightLeg")
-        pyrosim.Send_Sensor_Neuron(name=11, linkName="MiddleLeftLowerLeg")
-        pyrosim.Send_Sensor_Neuron(name=12, linkName="MiddleRightLowerLeg")
-        pyrosim.Send_Motor_Neuron(name=13, jointName="Torso_BackLeg")
-        pyrosim.Send_Motor_Neuron(name=14, jointName="Torso_FrontLeg")
-        pyrosim.Send_Motor_Neuron(name=15, jointName="Torso_LeftLeg")
-        pyrosim.Send_Motor_Neuron(name=16, jointName="Torso_RightLeg")
-        pyrosim.Send_Motor_Neuron(name=17, jointName="FrontLeg_FrontLowerLeg")
-        pyrosim.Send_Motor_Neuron(name=18, jointName="BackLeg_BackLowerLeg")
-        pyrosim.Send_Motor_Neuron(name=19, jointName="LeftLeg_LeftLowerLeg")
-        pyrosim.Send_Motor_Neuron(name=20, jointName="RightLeg_RightLowerLeg")
-        pyrosim.Send_Motor_Neuron(name=21, jointName="Torso_MiddleLeftLeg")
-        pyrosim.Send_Motor_Neuron(name=22, jointName="Torso_MiddleRightLeg")
-        pyrosim.Send_Motor_Neuron(name=23, jointName="MiddleLeftLeg_MiddleLeftLowerLeg")
-        pyrosim.Send_Motor_Neuron(name=24, jointName="MiddleRightLeg_MiddleRightLowerLeg")
+        pyrosim.Send_Motor_Neuron(name=9, jointName="Torso_BackLeg")
+        pyrosim.Send_Motor_Neuron(name=10, jointName="Torso_FrontLeg")
+        pyrosim.Send_Motor_Neuron(name=11, jointName="Torso_LeftLeg")
+        pyrosim.Send_Motor_Neuron(name=12, jointName="Torso_RightLeg")
+        pyrosim.Send_Motor_Neuron(name=13, jointName="FrontLeg_FrontLowerLeg")
+        pyrosim.Send_Motor_Neuron(name=14, jointName="BackLeg_BackLowerLeg")
+        pyrosim.Send_Motor_Neuron(name=15, jointName="LeftLeg_LeftLowerLeg")
+        pyrosim.Send_Motor_Neuron(name=16, jointName="RightLeg_RightLowerLeg")
 
         for i in range(c.numSensorNeurons):      # 0,1,2
             for j in range(c.numMotorNeurons):
