@@ -1,5 +1,6 @@
 print("hillclimber")
 from solution import SOLUTION
+import numpy
 import constants as c
 class PARALLEL_HILL_CLIMBER:
 
@@ -13,8 +14,8 @@ class PARALLEL_HILL_CLIMBER:
         for i in range(c.populationSize):
             self.parents[i] = SOLUTION(self.nextAvailableID)
             self.nextAvailableID += 1      
+        self.fitnessValues = numpy.zeros((c.populationSize, c.numberOfGenerations))
        # print(self.parents)
-       self.fitnessValues = numpy.zeros((c.populationSize, c.numberOfGenerations))
     def Evolve(self):
         #print("evolve")
         for i in self.parents:
