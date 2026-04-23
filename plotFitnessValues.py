@@ -1,8 +1,8 @@
 import numpy
 import matplotlib.pyplot as plt
 
-quad = numpy.load("quadrupedFitness.npy")
-hexa = numpy.load("hexapodFitness.npy")
+quad = numpy.load("quadrupedFitness.npy", allow_pickle=True)
+hexa = numpy.load("hexapodFitness.npy", allow_pickle=True)
 
 quad_avg = numpy.mean(quad, axis=0)
 hexa_avg = numpy.mean(hexa, axis=0)
