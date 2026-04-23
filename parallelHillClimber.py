@@ -14,6 +14,7 @@ class PARALLEL_HILL_CLIMBER:
             self.parents[i] = SOLUTION(self.nextAvailableID)
             self.nextAvailableID += 1      
        # print(self.parents)
+       self.fitnessValues = numpy.zeros((c.populationSize, c.numberOfGenerations))
     def Evolve(self):
         #print("evolve")
         for i in self.parents:
@@ -22,12 +23,13 @@ class PARALLEL_HILL_CLIMBER:
             self.parents[i].Wait_For_Simulation_To_End()
         for generation in range(c.numberOfGenerations):
 
+            self.currentGeneration = generation
             print("\nGeneration:", generation)
             self.Spawn()
             self.Mutate()
             self.Evaluate_Children()
             self.Select() 
-
+        numpy.save("fitnessValues.npy", self.fitnessValues)
     def Show_Best(self):
       #  self.parent.Evaluate("GUI")
         best = max(self.parents.values(), key=lambda s: s.fitness)
@@ -59,3 +61,4 @@ class PARALLEL_HILL_CLIMBER:
             
             if self.children[i].fitness > self.parents[i].fitness:
                 self.parents[i] = self.children[i]
+            self.fitnessValues[i][self.currentGeneration] = self.parents[i].fitness
