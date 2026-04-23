@@ -1,6 +1,7 @@
 print("hillclimber")
 from solution import SOLUTION
 import constants as c
+import numpy
 class PARALLEL_HILL_CLIMBER:
 
     def __init__(self):
@@ -13,6 +14,7 @@ class PARALLEL_HILL_CLIMBER:
         for i in range(c.populationSize):
             self.parents[i] = SOLUTION(self.nextAvailableID)
             self.nextAvailableID += 1      
+        self.fitnessValues = numpy.zeros((c.populationSize, c.numberOfGenerations))
        # print(self.parents)
     def Evolve(self):
         #print("evolve")
@@ -21,12 +23,13 @@ class PARALLEL_HILL_CLIMBER:
         for i in self.parents:
             self.parents[i].Wait_For_Simulation_To_End()
         for generation in range(c.numberOfGenerations):
-
+            self.currentGeneration = generation
             print("\nGeneration:", generation)
             self.Spawn()
             self.Mutate()
             self.Evaluate_Children()
             self.Select() 
+        numpy.save("fitnessValues.npy", self.fitnessValues)
 
     def Show_Best(self):
       #  self.parent.Evaluate("GUI")
@@ -59,3 +62,4 @@ class PARALLEL_HILL_CLIMBER:
             
             if self.children[i].fitness > self.parents[i].fitness:
                 self.parents[i] = self.children[i]
+            self.fitnessValues[i][self.currentGeneration] = self.parents[i].fitness
