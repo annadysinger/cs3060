@@ -133,7 +133,7 @@ class SOLUTION:
             parent="Torso",
             child="MiddleLeftLeg",
             type="revolute",
-            position=[-0.5, -0.5, 1],
+            position=[-0.5, -0.25, 1],
             jointAxis="0 1 0"
         )
 
@@ -191,7 +191,7 @@ class SOLUTION:
             parent="Torso",
             child="MiddleRightLeg",
             type="revolute",
-            position=[0.5, 0.5, 1],
+            position=[0.5, 0.25, 1],
             jointAxis="0 1 0"
         )
 
